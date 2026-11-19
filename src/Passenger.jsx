@@ -35,7 +35,6 @@ function FitBuses({ buses }) {
 
 export default function Passenger() {
   const [buses, setBuses] = useState([]);
-  const [mapType, setMapType] = useState('default');
   const [loadingMap, setLoadingMap] = useState(true);
   const [mapError, setMapError] = useState('');
   const [form, setForm] = useState({ passenger_name: '', contact_info: '', category: 'Other', message: '' });
@@ -126,30 +125,8 @@ export default function Passenger() {
         {mapError && <div className="passenger-alert error">{mapError}</div>}
         <div className="passenger-map-layout">
           <div className="passenger-map-wrap">
-            <div className="passenger-map-type-control">
-              <label htmlFor="passenger-map-type">Map type</label>
-              <select id="passenger-map-type" value={mapType} onChange={event => setMapType(event.target.value)}>
-                <option value="default">Default</option>
-                <option value="satellite">Satellite</option>
-                <option value="terrain">Terrain</option>
-              </select>
-            </div>
             <MapContainer center={mapCenter} zoom={12} scrollWheelZoom className="passenger-leaflet-map">
-              {mapType === 'default' && <TileLayer
-                key="street-map"
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />}
-              {mapType === 'satellite' && <TileLayer
-                key="satellite-map"
-                attribution='Tiles &copy; Esri'
-                url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-              />}
-              {mapType === 'terrain' && <TileLayer
-                key="terrain-map"
-                attribution='Tiles &copy; Esri &mdash; Sources: Esri, USGS, NOAA'
-                url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
-              />}
+              <TileLayer attribution='&copy; OpenStreetMap contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
               <FitBuses buses={buses}/>
               {buses.map(bus => <Marker key={bus.bus_id} position={[Number(bus.latitude), Number(bus.longitude)]} icon={busIcon}>
                 <Popup><strong>{bus.bus_code}</strong><br/>{publicDirection(bus)}<br/>GPS: {formatTime(bus.recorded_at)}</Popup>
