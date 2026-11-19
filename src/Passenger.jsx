@@ -41,6 +41,7 @@ export default function Passenger() {
   const [sending, setSending] = useState(false);
   const [notice, setNotice] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
+  const [mapType, setMapType] = useState('default');
 
   const loadBuses = useCallback(async (quiet = false) => {
     if (!supabase || !isSupabaseConfigured) {
@@ -120,13 +121,24 @@ export default function Passenger() {
       <section className="passenger-map-section">
         <div className="passenger-section-heading">
           <div><p className="eyebrow">LIVE FLEET</p><h2>Bus locations</h2><p>Locations appear when a bus crew is on an active shift and GPS is available.</p></div>
-          <button className="passenger-refresh" onClick={() => loadBuses()} disabled={loadingMap}><RefreshCw size={16} className={loadingMap ? 'spin' : ''}/>{loadingMap ? 'Refreshing…' : 'Refresh map'}</button>
+          <div className="passenger-map-actions">
+            <label className="passenger-map-type-control">Map type
+              <select value={mapType} onChange={event => setMapType(event.target.value)} aria-label="Map type">
+                <option value="default">Default</option>
+                <option value="satellite">Satellite</option>
+                <option value="terrain">Terrain</option>
+              </select>
+            </label>
+            <button className="passenger-refresh" onClick={() => loadBuses()} disabled={loadingMap}><RefreshCw size={16} className={loadingMap ? 'spin' : ''}/>{loadingMap ? 'Refreshing…' : 'Refresh map'}</button>
+          </div>
         </div>
         {mapError && <div className="passenger-alert error">{mapError}</div>}
         <div className="passenger-map-layout">
           <div className="passenger-map-wrap">
             <MapContainer center={mapCenter} zoom={12} scrollWheelZoom className="passenger-leaflet-map">
-              <TileLayer attribution='&copy; OpenStreetMap contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
+              {mapType === 'default' && <TileLayer attribution='&copy; OpenStreetMap contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>}
+              {mapType === 'satellite' && <TileLayer attribution='Tiles &copy; Esri' url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"/>}
+              {mapType === 'terrain' && <TileLayer attribution='Tiles &copy; Esri' url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"/>}
               <FitBuses buses={buses}/>
               {buses.map(bus => <Marker key={bus.bus_id} position={[Number(bus.latitude), Number(bus.longitude)]} icon={busIcon}>
                 <Popup><strong>{bus.bus_code}</strong><br/>{publicDirection(bus)}<br/>GPS: {formatTime(bus.recorded_at)}</Popup>
