@@ -35,8 +35,8 @@ Last updated: 2026-11-19
 5. Configure deployment environment variables and deploy.
 
 
-## Latest update — Step 5: Restore passenger map types
-- Status: done (map type selector and tile layers restored in GitHub).
+## Latest update — Step 6: Set Passenger Map to Default
+- Status: done (GitHub source updated).
 - Files changed: `src/Passenger.jsx`, `src/styles.css`, `PROGRESS.md`.
-- Decisions: Passenger map starts on Default (OpenStreetMap); users can switch to Satellite (Esri World Imagery) or Terrain (Esri World Topographic Map). Existing live bus markers, GPS refresh, and complaint form remain unchanged.
-- Open issues: Browser/build verification and Netlify deployment remain pending.
+- Decisions: Passenger map now uses only the Default OpenStreetMap street layer; removed Satellite/Terrain switching controls. Existing live bus markers, GPS refresh, and complaint form remain unchanged.
+- Open issues: Live Netlify page could not be inspected through the available page viewer; build and deployment status are unverified.
