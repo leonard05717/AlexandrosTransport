@@ -40,3 +40,10 @@ Last updated: 2026-11-19
 - Files changed: `src/Passenger.jsx`, `src/styles.css`, `PROGRESS.md`.
 - Decisions: Passenger map now uses only the Default OpenStreetMap street layer; removed Satellite/Terrain switching controls. Existing live bus markers, GPS refresh, and complaint form remain unchanged.
 - Open issues: Live Netlify page could not be inspected through the available page viewer; build and deployment status are unverified.
+
+
+## Latest update — Step 7: Match Passenger Map to Reference Style
+- Status: done (GitHub source updated; production deployment not yet verified).
+- Files changed: `src/Passenger.jsx`, `PROGRESS.md`.
+- Decisions: Replaced the plain OpenStreetMap raster layer with CARTO Voyager tiles for a more Google Maps-like street presentation with clearer road and place labels. Set the no-bus fallback map center to the Naic/Ternate area ([14.32, 120.78]); active bus GPS still controls the map view through FitBuses.
+- Open issues: Confirm the CARTO tiles load in the deployed browser and visually compare with the supplied reference. Netlify deployment/build not yet verified.
