@@ -111,9 +111,3 @@ input,select,textarea,button{max-width:100%}
   .passenger-footer{gap:12px}
 }
 
-
-/* Passenger map type controls */
-.passenger-map-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.passenger-map-type-control{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#fff;border:1px solid #dce7e9;border-radius:10px;color:#48626d;font-size:11px;font-weight:700}
-.passenger-map-type-control select{height:28px;min-width:112px;padding:0 8px;border:1px solid #dce6e9;border-radius:7px;background:#fff;color:#284652;font-size:11px}
-@media(max-width:520px){.passenger-map-actions{width:100%}.passenger-map-type-control{flex:1;justify-content:space-between}.passenger-map-type-control select{flex:1;max-width:150px}.passenger-refresh{justify-content:center}}
